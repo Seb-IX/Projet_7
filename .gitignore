@@ -1,0 +1,9 @@
+/Solution/script/data/**
+/Solution/script/logs/**
+/Solution/script/access_key/**
+/Solution/script/access_url/**
+/Ressource/data/**
+/Ressource/aide/**
+**/.vscode/**
+**/.ipynb_checkpoints/**
+**/__pycache__/**

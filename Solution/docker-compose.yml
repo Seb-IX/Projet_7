@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+    projet7-oc:
+        container_name: projet7-oc
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        restart: always
+        volumes:
+          - ./script:/app/script
+        command: jupyter notebook --ip 0.0.0.0 --no-browser --allow-root --NotebookApp.token='superPassword1234'
+        ports:
+          - "8888:8888"
+          - "6006:6006"
+        networks:
+            - jupyter-network
+           
+        deploy:
+          resources:
+            reservations:
+              devices:
+              - driver: nvidia
+                device_ids: ['0', '1']
+                capabilities: [gpu]
+            
+networks:
+    jupyter-network:
+        driver: bridge
