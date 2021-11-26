@@ -1,7 +1,6 @@
 /Solution/script/data/**
 /Solution/script/logs/**
-/Solution/script/access_key/**
-/Solution/script/access_url/**
+/Solution/script/blog_html/**
 /Ressource/data/**
 /Ressource/aide/**
 **/.vscode/**
