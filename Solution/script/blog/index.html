@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Benchmark Data Mining</title>
+    <link rel="shorcut icon" href="./img/logo.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+        <a class="navbar-brand" href="#">Benchmark Data Mining</a>  
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Présentation</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#Presentation-du-contexte">Présentation du contexte</a>
+                        <a class="dropdown-item" href="#Presentation-rapide-du-jeu-de-données">Présentation rapide du jeu de données</a>
+                        <a class="dropdown-item" href="#Azure-ml">Azure Machine Learning & Cognitive Service</a>
+                        <a class="dropdown-item" href="#how-to-use">Comment utiliser Azure ?</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Réalisation des solutions</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#Cognitive-Service-Azure">Cognitive Service Azure</a>
+                        <a class="dropdown-item" href='#no-code'>Module "no-code"</a>
+                        <a class="dropdown-item" href="#Algorithme-avance">Algorithme avancé</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Présentation des résultats</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#Performance-des-modeles">Performance des modèles</a>
+                        <a class="dropdown-item" href="#Cout-utilisation">Coût d'utilisation</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#Conclusion">Conclusion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/Seb-IX/Projet_7/tree/main/Solution" target="_blank">Projet</a>
+                </li>
+            </ul>
+        </div>
+      </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div style="text-align:center; padding-top: 70px;">
+                    <h3>En collaboration avec :</h3>
+                    <a href="https://openclassrooms.com/fr/paths/188-ingenieur-ia" target="_blank" style="text-decoration: none;">
+                        <img src="./img/logo-oc-no-bg.png" style="display:inline-block;max-height: 5rem; max-width: 100%;">
+                        <img src="./img/logo_microsoft.png" style="height: 60px; display:inline-block;">
+                    </a>
+                </div>    
+                <div id="Presentation-du-contexte" class="container-fluid" style="padding-top:70px;">
+                    <h2>Présentation</h2>
+                    <h3>Présentation du contexte</h3>
+                    <p>
+                    La société "Air Paradis" souhaite pouvoir détecter les bad buzz via le réseau Twitter. Pour ce faire, Air Paradis requête une entreprise de conseil spécialisée sur les problématiques du marketing digital (dont je fais partie en tant qu'ingénieur IA) pour obtenir une solution lui permettant d'obtenir le sentiment associé à un tweet.
+                    </p>
+                    <div style="text-align:center">
+                        <img src="./img/logo.png" style="display:inline-block;max-width: 50%;" alt="logo air paradis">
+                        <img src="./img/twitter-logo.jpg" style="max-height:5rem;max-width: 50%; display:inline-block;">
+                    </div>
+
+                    <p>
+                        Pour ce faire l'entreprise ne dispose pas de jeu de données. Le jeu de données sera donc un jeu de données présent sur Kaggle : <a href="https://www.kaggle.com/kazanova/sentiment140/download" target="_blank">"Sentiment140 dataset with 1.6 miilion tweets"</a> qui met à disposition 1.600.000 tweets labellisés avec un sentiment (négatif ou positif).
+                        Faisant partie d'une entreprise de conseil spécialisée sur les problématiques du marketing digital, mon responsable "Marc" souhaite que je généralise la solution et que je benchmark des solutions cloud (Azure) pour voir l'impact/l'utilité/la performance de ces solutions par rapport à des solutions proposées par un Ingénieur IA grâce à des algorithmes de Deep Learning. 
+                    </p>
+                </div>
+                <div id="Presentation-rapide-du-jeu-de-données" class="container-fluid" style="padding-top:70px;">
+                    <h3>Présentation rapide du jeu de données</h3>
+                    <p>
+                        Le jeu de données source contient 6 colonnes (target, id, date, flag, user, text) et pour chaque ligne un tweet associé (colonne "text"), cependant seulement 2 colonnes sont intéressantes dans note contexte. On prendra donc la colonne "target" qui indique le sentiment associé aux tweets (0 pour un tweet négatif et 4 pour un tweet positif) et également la colonne "text" qui correspond aux tweets.
+                        <br><br>
+                        Le jeu de données est une extraction de 3 mois de tweets et les tweets sont compris entre 1 et 150 mots.
+                    </p>
+                </div>
+                <div id="Azure-ml" class="container-fluid" style="padding-top:70px;">
+                    <h3>Azure Machine Learning & Cognitive Service</h3>
+                    <img src="./img/Microsoft-Azure-Logo.png" style="margin-left:auto; margin-right:auto; display: block; height: 100px">
+                    <p>
+                        Azure fourni un espace de travail pour le Machine Learning qui comprend une architecture proposant de nombreux services comme la création de pipeline ML, la création d'un modèle automatique (Automated ML), ou encore de créer des instances web/inférence pour mettre en place une API réalisée depuis Automated ML, studio drag & drop ou encore un notebook Azure ou local.
+                        <br><br>
+                        Le schéma ci-dessous est une représentation de l'architecture fournie par Azure Machine Learning, on y retrouve les composantes (dependencies) qu'utilisent Azure Machine Learning (qui sont demandées lors de la création), les ressources managées (Container ACI/ Cluster AKS), et le plus important les possibilités du workspace, avec la création d'environnements (il existe déjà des environnements pré-définis), des "Experiments" qui permettent l'entraînement de modèle, la création de pipeline complète le stockage de modèle et jeu de données et enfin la mise en place d'Endpoint pour exposer les différents modèles créés.
+                    </p>
+                    <img src="./img/architecture.svg" style="margin-left:auto; margin-right:auto; display: block; max-width: 100%; max-height: 500px;">
+                    
+                    <p>
+                        Il existe également un service Clé en main "Cognitive Services Azure" qui est une API permettant de faire de la traduction de texte, détection de langage, Data Mining, Vision par ordinateur... On abordera cette solution plus en détail dans la partie Réalisation des solutions.
+                    </p> 
+                    <img src="./img/cognitive_service_logo.jpg" style="margin-left:auto; margin-right:auto; display: block; max-width: 80%;">
+                </div>
+                <div id="how-to-use" class="container-fluid" style="padding-top:70px;">
+                    <h3>Comment utiliser Azure ?</h3>
+                    <p>
+                        Cette section n'a pas pour but de connaître toutes les ressources Azure, mais uniquement celle abordée ici (Azure Machine Learning), pour commencer, il faut créer une ressource <a href="https://portal.azure.com/#create/Microsoft.MachineLearningServices" target="_blank">Azure Machine Learning</a> et remplir les champs suivants :
+                    </p>
+                    <img src="./img/creation_configuration_ml.jpg" style="margin-left:auto; margin-right:auto; display: block; max-width: 100%; max-height: 600px;">
+                    <p>
+                        Il est possible d'utiliser des ressources déjà créées préalablement ou bien créer directement les ressources nécessaires depuis cette interface (voire même laisser la création se faire automatiquement).
+                        <br>
+                        Comme précisé, les ressources présentent ici sont nécessaires au fonctionnement d'Azure Machine Learning, le Compte de Stockage permet de stocker les ressources générées par Azureml comme les notebooks, les environnements, les modèles... Le container Registry permet le management des ressources de calcul ACI et AKS, de paire avec Azure Key Vault et Azure Application Insight.
+
+                        Après avoir créé notre ressource, on peut exécuter Azure Machine Learning Studio :
+                    </p>
+                    <img src="./img/run_ml_studio.jpg" style="margin-left:auto; margin-right:auto; display: block; max-width: 100%; max-height: 200px;">
+                    <p>
+                        Depuis cet outil, il est possible de créer un notebook, faire des "Pipelines"/"Experiments" avec "Designer", et également créer automatiquement un modèle de Machine Learning 1 click dans la partie "Automated ML" puis de déployer le modèle également en 1 click :
+                    </p>
+                    <img src="./img/automated-ml-deploy.jpg" style="margin-left:auto; margin-right:auto; display: block; max-width: 100%; max-height: 400px;">
+                </div>
+                <div id="Cognitive-Service-Azure" class="container-fluid" style="padding-top:70px;">
+                    <h2>Réalisation des solutions</h2>
+                    <p>
+                        Pour la réalisation des tests, j'ai créé un jeu de données de 4000 tweets stratifiés avec 2000 bad tweets et 2000 good tweets. Dans chacun des résultats présentés ci-dessous le jeu de données a été séparé avant tout traitement. Cela permet d'éviter les fuites de données et de bien séparer le jeu de test et d'entraînement.
+                    </p>
+                    <h3>Cognitive Service Azure</h3>
+                    <p>
+                        Pour cette partie, rien de complexe étant une solution clé en main, pour créer une ressource cognitive, il suffit de se rendre sur le portail azure et de créer une ressource <a href="https://portal.azure.com/#create/Microsoft.CognitiveServicesAllInOne" target="_blank">Cognitive Services</a>.
+
+                        <br>Une fois créé, il suffit de récupérer le "Endpoint" et "Keys" d'accès au service, après ça, il suffit de suivre <a href="https://docs.microsoft.com/fr-fr/azure/cognitive-services/language-service/sentiment-opinion-mining/quickstart?pivots=programming-language-python" target="_blank">la documentation</a> pour l'implémenter puis l'utiliser.    
+                        Pour sécuriser l'accès, on peut mettre les accès en variable d'environnement puis on utilise la méthode suivante pour se connecter au Cognitive Service :
+                    </p>
+                    <img src="./img/azure_code/connection_cognitive_service.png" style="margin-left:auto; margin-right:auto; display: block; max-height: 350px; max-width: 100%;">
+                    <p>
+                        Après ça, on peut faire appel simplement à l'API avec ces méthodes :
+                    </p>
+                    <img src="./img/azure_code/cognitive_service_method.png" style="margin-left:auto; margin-right:auto; display: block; max-height: 700px; max-width: 100%;">
+                    <p>
+                        Puis on récupère les réponses de l'API avec : <span class="code">dic_response= get_response_prediction(send_request(data))</span>.<br>
+                        <br>
+                        Ce service nous retourne 4 informations, la prédiction (neutral, bad, good) puis le score associé (bad, neutral, good).<br>
+                        Comme notre jeu de données contient uniquement des données binaires (bad/good) on utilisera une régression logistique sur les 3 scores du service pour prédire les labels binaires associés et pouvoir obtenir un score de sentiment de mauvais à bon tweet et une réponse binaire.
+                        <br><br>
+                        Voici les résultats du service cognitif :
+                    </p>
+                    <img src="./img/benchmark_cognitive_service.jpg" style="margin-left:auto; margin-right:auto; display: block; max-width: 100%;">
+                    <p>
+                        On obtient un score AUC de 0.77 ce qui reste correct pour un service généraliste qu'offre le Cognitive Service. Si on regarde en détail, on remarque cependant un point très positif sur la matrice de confusion, le Cognitive Service détecte très bien les "bad" tweets avec une précision de 0.77.
+                        <br><br>
+                        On utilisera ce modèle comme "Baseline" afin de comparer l'utilité d'investir du temps dans la création d'un modèle personnalisé.
+                    </p>
+                </div>
+                <div id='no-code' class="container-fluid" style="padding-top:70px;">
+                    <h3>Module "no-code"</h3>
+                    <p>
+                        Sur Azure, il existe 2 modules "no-code", une version drag & drop que l'on va présenter en détail puis une version automatique (Automated ML) qui créé un pipeline/modèle complet en 1 click depuis Azure Machine Learning déployable également en 1 click.
+
+                        <br><br>
+                        Pour faire le pipeline drag & drop, on utilisera la version "classique" de "azureml" <span class="badge badge-danger">(/!\ cette version sera supprimée en 2024 /!\)</span>.
+                        <br>
+                        Il est possible également de réaliser une pipeline sur la nouvelle version (<a href="https://docs.microsoft.com/fr-fr/azure/machine-learning/tutorial-designer-automobile-price-train-score" target="_blank">avec un tutoriel sur la création</a> ET <a href="https://docs.microsoft.com/fr-fr/azure/machine-learning/tutorial-designer-automobile-price-deploy" target="_blank">un tutoriel sur le déployement</a>) mais il est nécessaire de créer une instance de calcul pour réaliser la pipeline 
+                        <br>
+                        puis utiliser un container ACI ou cluster AKS pour le déployement qui sont payants...
+                        <br><br>
+                        Pour le module drag & drop "classique" <a href="https://studio.azureml.net/" target="_blank">"studio.azureml.net"</a> il suffit de créer une nouvelle expérience puis de déplacer les modules que l'on souhaite appliquer sur notre pipeline comme 
+                        le montre le gif ci-dessous (le gif présente la nouvelle version sur Azure Machine Learning, mais le fonctionnement est identique).
+                    </p>
+                    <img src="./img/designer-drag-and-drop.gif" style="margin-left:auto; margin-right:auto; display: block; max-width: 100%;">
+                    <p>
+                        Pour ce module, j'ai réalisé un algorithme "simple" de Régression Logistique.
+                        <br><br>
+                        Pour ce faire, j'ai d'abord :
+                    </p>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+                                        Importer le jeu de données que j'ai stocké dans un compte de stockage Azure (fichier Blob) qui contient un échantillon réduit du jeu de données (10.000 tweets parfaitement stratifiés entre les bons et mauvais tweets).
+                                        <span class="badge badge-dark badge-pill">1</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+                                        Après ça, j'ai effectué un nettoyage des données textuels en supprimant les URL, faisant de la lemmatization, supprimant les stop words...
+                                        <span class="badge badge-dark badge-pill">2</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+                                        J'ai ensuite créé ma matrice TF-IDF et généré un jeu de données du vocabulaire que j'ai réutilisé par la suite.
+                                        <span class="badge badge-dark badge-pill">3</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+                                        Puis j'ai entraîné mon jeu de données grâce à cette matrice TF-IDF et je renvois ensuite les résultats du modèle.
+                                        <span class="badge badge-dark badge-pill">4</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <p>
+                        Ci-dessous voici la pipeline complète utilisée pour le déploiement :
+                    </p>
+                    <img src="./img/studio_classic_web_service.jpg" style="margin-left:auto; margin-right:auto; display: block; max-width: 100%;">
+                    <p>
+                        Les résultats sont moins bons que le cognitive service, mais pourrait être équivalent/meilleur si le jeu de données serait plus important.
+                    </p>
+                </div>
+                <div id="Algorithme-avance" class="container-fluid" style="padding-top:70px;">
+                    <h3>Algorithme avancé</h3>
+                    <h4>Démarche des recherches</h4>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+                                        La première étape ici consistera à vérifier la pertinence de faire de la lemmatisation ou du stemming pour l'amélioration d'algorithme de DL type. (Embedding -> LSTM -> Dense)
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+                                        Après ça, on effectuera un benchmark de plusieurs types d'algorithmes DL afin de trouver la meilleure structure :
+                                        <ul class="list-group">
+                                            <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+                                                Modèle DL multicouche
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+                                                Modèle RNN classique
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+                                                Modèle LSTM Embedding généré automatiquement
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+                                                Modèle LSTM avec Word2Vec
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+                                                Modèle LSTM avec Glove
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+                                                Modèle Pré-entraîné BERT (Transfer-Learning)
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+                                        Après avoir analysé plusieurs modèles, on choisira un modèle afin de l'optimiser.
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+                                        Une fois la recherche d'hyperparamètres effectuée, on générera notre modèle final grâce à une Pipeline.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+                    <h4>Résultats</h4>
+                    <p>
+                        Pour faire un résumé simple, les structures LSTM apportent de bien meilleurs résultats que les RNN ou des modèles classiques multicouches. Ensuite les méthodes de Lemmatization et Stemming font perdre de l'information et donc ici de la performance.
+                        <br>
+                        Un clean classique avec simplement du regex apporte de meilleurs résultats voire même ne pas traiter le texte en amont !
+                        <br><br>
+                        Pour les structures Embedding, la méthode Word2Vec semble plus performante, et enfin Bert pré-entraîné obtient de très bons résultats, mais reste moins performant que Word2vec avec une couche LSTM. 
+                        <br>
+                        Il serait également possible de ré-entraîner la couche Bert avec le système d'attention BERT qui est parfaitement explicité sur le site <a href="https://lesdieuxducode.com/blog/2019/4/bert--le-transformer-model-qui-sentraine-et-qui-represente" target="_blank">"Les Dieux du code"</a>.
+                        <br><br>
+                        Au final, le meilleur est le Modèle LSTM avec la couche Embedding Word2Vec, et voici les résultats sur le jeu de données test :
+                    </p>
+                    <img src="./img/benchmark_avanced.jpg" style="margin-left:auto; margin-right:auto; display: block;  max-width:100%;">
+                    <p>
+                        Ce modèle est meilleur en tout point avec un score AUC de 0.92 et 0.84 de précision sur les bad tweets !
+                        <br><br>
+                        Pour les curieux les tests et benchmarks entre les différentes structures de Deep Learning sont explicités sur mon <a href="https://github.com/Seb-IX/Projet_7/tree/main/Solution/script/P07_modélisation_avancé.ipynb" target="_blank">Github</a>.
+                    </p>
+                    <h4>Déploiement Azure</h4>
+                    <p>
+                        Pour le déploiement Azure, il existe plusieurs solutions, ici, on utilisera l'environnement Azure Machine Learning pour faire le déploiement de notre modèle.
+                        Bien évidement il faut avoir créé un workspace Machine Learning sur Azure (comme expliqué dans le chapitre <a href="#how-to-use">"Comment utiliser Azure ?"</a>).<br>
+                        <br><br>
+                        Pour déployer son modèle, il faut préalablement sauvegarder son modèle (avec joblib au format .pkl ou bien save un model Keras avec la méthode <span class="code">keras_model.save("./data/model/keras_model")</span> et non au format h5).
+                        <br><br>
+                        Après ça, on peut se connecter à son workspace Machine Learning Azure. Pour ça, il est nécessaire d'installer la librairie "azureml" <span class="code">pip install azureml</span> & <span class="code">pip install azureml-core</span> puis de se connecter de la façon suivante :
+                    </p>
+                    <img src="./img/Deployement/connect_ws.png" style="margin-left:auto; margin-right:auto; display: block; max-width: 100%; max-height: 250px">
+                    <p>
+                        Après avoir la connection avec le workspace, on peut interagir avec, et donc en premier lieu sauvegarder son modèle sur notre workspace.
+                    </p>
+                    <img src="./img/Deployement/save_model.png" style="margin-left:auto; margin-right:auto; display: block; max-width: 100%; max-height: 200px;">
+                    <p>
+                        Cette méthode upload notre modèle dans le workspace puis renvoie son objet "azureml.Model" qui nous servira par la suite (il est également possible de récupérer un modèle avec le code <span class="code">w2v_model_azure = Model(ws, 'keras_w2v_model')</span>).
+                        Pour interagir avec notre modèle qui sera déployé, il est nécessaire de créer un fichier score.py, le container généré se basera sur ce fichier lors du déploiement pour interagir avec les modèles sous la forme d'une API. En voici un exemple qui récupère le modèle de Deep Learning entraîné et le Tokenizer Keras entraîné dans la fonction <span class="code">init()</span> qui est exécutée au déploiement du container, puis la méthode run qui est exécutée sur l'appel de l'API :
+                    </p>
+                    <img src="./img/Deployement/score_py.png" style="margin-left:auto; margin-right:auto; display: block; max-width: 100%; max-height: 800px">
+                    <p>
+                        Comme précisé à l'instant, il est nécessaire d'avoir un environnement d'exécution, il existe plusieurs méthodes comme la création d'un Container pré-créé, utiliser des environnements pré chargé par Azure ou encore créer son propre environnement grâce à la méthode suivante :
+                    </p>
+                    <img src="./img/Deployement/create_environement.png" style="margin-left:auto; margin-right:auto; display: block; max-width: 100%; max-height: 250px">
+                    <p>
+                        Maintenant que nous avons tous les Objects à disposition. Il est nécessaire de préparer la configuration de déployement (AKS / ACI). Ici, on utilisera un container simple ACI avec 2 core et 4Go de ram.
+                        <br>
+                        Il ne reste plus qu'à déployer nos modèles (Keras & Tokenizer): 
+                    </p>
+                    <img src="./img/Deployement/deployment.png" style="margin-left:auto; margin-right:auto; display: block; max-width: 100%; max-height: 300px">
+                </div>
+                <div id="Performance-des-modeles" class="container-fluid" style="padding-top:70px;">
+                    <h2>Présentation des résultats</h2>
+                    <h3>Performance des modèles</h3>
+                    <p>
+                        Voici le résultat des différentes solutions testées en terme de performance:
+                    </p>
+                    <img src="./img/benchmark_solution.png" style="margin-left:auto; margin-right:auto; display: block; max-width: 100%; max-height: 40rem;">
+                    <p>
+                        Cette fiche résumé est suffisamment parlante, on voit que les modèle word2vec_lstm et meilleur que tous les autres modèles (Glove est meilleur à l'apprentissage, mais généralise moins bien que Word2Vec).
+                        <br><br>
+                        Bert peut largement être amélioré, mais on voit que le temps d'entraînement avec un modèle pré-entraîné est déjà très important, je ne suis donc pas partie sur cette solution pour ne pas prendre plusieurs jours sur l'apprentissage.
+                    </p>
+                </div>
+                <div id="Cout-utilisation" class="container-fluid" style="padding-top:70px;">
+                    <h3>Coût d'utilisation</h3>
+                    <p>
+                        Voici les fiches de coût estimées pour une utilisation à 1.000.000 de tweet mensuel:
+                    </p>
+                    <div style="text-align:center">
+                        <a href="./img/pricing_cognitif_month.jpg" target="_blank"><img src="./img/pricing_cognitif_month.jpg" style="display:inline-block;max-width: 45%; max-height: 600px;"></a>
+                        <a href="./img/pricing_aks_month.jpg" target="_blank"><img src="./img/pricing_aks_month.jpg" style="display:inline-block;max-width: 45%; max-height: 750px;"></a>
+                    </div>
+                    <p>
+                        J'ai réalisé un fichier Excel pour simuler les coûts du projet disponible <a href="https://raw.githubusercontent.com/Seb-IX/Projet_7/main/Solution/script/cost_api.xlsx" target="_blank">ici en téléchargement</a>.
+                    </p>
+                </div>
+                <div id="Conclusion" class="container-fluid" style="padding-top:70px;">
+                    <h2>Conclusion</h2>
+                    <p>
+                        Si on réalise une matrice de choix, le plus pertinent est le modèle avancé malgré son coût de mise en place le plus important (prix d'un Ingénieur IA/consultant Data pour travailler sur le sujet), il obtient les meilleurs résultats et un coût d'utilisation (à forte utilisation) assez faible en production !
+                    </p>
+                    <img src="./img/matric_choix.png" style="margin-left:auto; margin-right:auto; display: block; max-width: 100%; max-height: 40rem;">
+                </div>
+                <p style="font-size: 16px; font-style: italic; padding-top: 80px;">
+                    Le détail du code est présent sur <a href="https://github.com/Seb-IX/Projet_7/tree/main/Solution" target="_blank">Github</a> avec le script de déploiements, les différentes modélisations avancées et les requêtes et benchmark du module no-code et du Cognitive Service Azure.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer mt-auto py-3">
+    <div class="container-fluid" style="text-align:right;">
+        <span class=" badge badge-dark"  style="font-style: italic; ">TUCCIO Sébastien 2021-2022 [OC-Ingénieur IA]</span>
+      </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+</body>
+
+</html>
